@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "booble-modal": [
+        "dist/booble-modal"
+      ],
+      "booble-modal/*": [
+        "dist/booble-modal/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

@@ -120,6 +120,41 @@
           }
         }
       }
+    },
+    "BoobleModal": {
+      "projectType": "library",
+      "root": "projects/booble-modal",
+      "sourceRoot": "projects/booble-modal/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/booble-modal/tsconfig.lib.json",
+            "project": "projects/booble-modal/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/booble-modal/src/test.ts",
+            "tsConfig": "projects/booble-modal/tsconfig.spec.json",
+            "karmaConfig": "projects/booble-modal/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/booble-modal/tsconfig.lib.json",
+              "projects/booble-modal/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "booble-modal"
 }
