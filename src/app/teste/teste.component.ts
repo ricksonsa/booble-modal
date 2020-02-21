@@ -1,3 +1,4 @@
+import { BoobleModalService } from 'projects/booble-modal/src/public-api';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,13 +10,16 @@ export class TesteComponent implements OnInit {
 
   public boobleModalData: any;
 
-  constructor() { }
+  constructor(private modalService: BoobleModalService) { }
 
   ngOnInit() {
   }
 
   print() {
     console.log(this.boobleModalData.teste);
+  }
+  dismiss() {
+    this.modalService.dismiss({ alo: 'guga viadao' });
   }
 
 }

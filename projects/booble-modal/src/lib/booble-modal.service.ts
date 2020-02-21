@@ -1,4 +1,5 @@
 import { Injectable, ComponentRef, ComponentFactoryResolver, ApplicationRef, Injector, EmbeddedViewRef } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,8 @@ import { Injectable, ComponentRef, ComponentFactoryResolver, ApplicationRef, Inj
 export class BoobleModalService {
 
   componentRef: ComponentRef<any>;
+  private value: BehaviorSubject<any> = new BehaviorSubject(null);
+  isDismissed = false;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -14,8 +17,11 @@ export class BoobleModalService {
   ) { }
 
   present(component: any, data?: any) {
-    if (this.componentRef)
-      this.dismiss();
+    if (this.componentRef) {
+      this.dismiss(null);
+    }
+
+    this.isDismissed = false;
 
     this.componentRef = this.componentFactoryResolver
       .resolveComponentFactory(component)
@@ -36,14 +42,22 @@ export class BoobleModalService {
     document.getElementsByTagName('html')[0].style.overflow = 'hidden';
 
     return {
-      dismiss: this.dismiss
+      dismiss: this.dismiss,
+      onDidDismiss: this.onDidDismiss,
+      isDismissed: this.isDismissed
     };
   }
 
-  dismiss() {
+  private get onDidDismiss() {
+    return this.value.asObservable();
+  }
+
+  dismiss(data: any) {
+    this.isDismissed = true;
     this.applicationRef.detachView(this.componentRef.hostView);
     this.componentRef.destroy();
     document.getElementsByTagName('html')[0].removeAttribute('style');
+    this.value.next(data);
   }
 
 

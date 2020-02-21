@@ -9,6 +9,7 @@ import { BoobleModalService } from 'projects/booble-modal/src/public-api';
 })
 export class AppComponent implements OnInit {
   title = 'booble-modal';
+  modalSubs: any;
 
 
   /**
@@ -19,7 +20,19 @@ export class AppComponent implements OnInit {
 
   }
 
+  onClick() {
+    this.open();
+  }
+
   ngOnInit(): void {
-    var modal = this.modalService.present(TesteComponent, { teste: 'Rennan zanibas good girl' });
+    this.open();
+  }
+
+  open() {
+    if (this.modalSubs) {
+      this.modalSubs.unsubscribe();
+    }
+    const modal = this.modalService.present(TesteComponent, { teste: 'Rennan zanibas good girl' });
+    this.modalSubs = modal.onDidDismiss.subscribe(data => console.log('retorno modal', [data, modal.isDismissed]));
   }
 }
